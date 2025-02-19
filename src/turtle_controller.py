@@ -23,8 +23,8 @@ def callback(data):
     pub.publish(twist)
 
 def listener():
-    rospy.init_node('turtle_controller', anonymous=True)
-    rospy.Subscriber('/turtle_controller', String, callback)
+    rospy.init_node('listener', anonymous=True)
+    rospy.Subscriber('/chatter', String, callback)
     rospy.spin()
 
 if __name__ == '__main__':

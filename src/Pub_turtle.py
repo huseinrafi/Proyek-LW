@@ -8,9 +8,11 @@ def talker():
     rate = rospy.Rate(1)  # Frekuensi pengiriman pesan (1 Hz = 1 detik sekali)
 
     while not rospy.is_shutdown():
-        message = "Masukkan Perintah untuk menggerakkan Turtle (Maju, Mundur, Kiri, Kanan)"  
-        rospy.loginfo(f"Mengirim pesan: {message}")
-        pub.publish(message)  # Mengirim pesan ke topic
+        input_message = input("Masukkan Perintah untuk menggerakkan Turtle (Maju, Mundur, Kiri, Kanan)")  # Meminta input pesan dari user  
+        message = String()  # Membuat objek message dengan tipe data String
+        message.data = input_message # Mengisi data message dengan input dari user
+        rospy.loginfo(f"Sending: {message.data}")
+        pub.publish(message.data)
         rate.sleep()  # Tunggu sesuai rate
 
 if __name__ == "__main__":
