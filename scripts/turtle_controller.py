@@ -8,14 +8,23 @@ def callback(data):
     pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
     twist = Twist()
 
-    #Maju twist.linear.x = 2.0
-    #Mundur twist.linear.x = -2.0
-    #Kiri twist.angular.z = 2.0
-    #Kanan twist.angular.z = -2.0
+    if data.data == "Maju":
+        twist.linear.x = 2.0
+    elif data.data == "Mundur": # Jika pesan yang diterima adalah "Mundur"
+        twist.linear.x = -2.0  # Kecepatan linear -2.0
+    elif data.data == "Kiri": # Jika pesan yang diterima adalah "Kiri"
+        twist.angular.z = 2.0  # Kecepatan angular 2.0
+    elif data.data == "Kanan": # Jika pesan yang diterima adalah "Kanan"
+        twist.angular.z = -2.0  # Kecepatan angular -2.0
+    else:
+        rospy.loginfo("Perintah tidak dikenal")
+        return
+
     pub.publish(twist)
 
 def listener():
-    # Menggunakan topik  "/turtle_commands"
+    rospy.init_node('turtle_controller', anonymous=True)
+    rospy.Subscriber('/turtle_controller', String, callback)
     rospy.spin()
 
 if __name__ == '__main__':
